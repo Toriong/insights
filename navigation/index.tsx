@@ -55,18 +55,26 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
+  const isUserSignedIn = !!localStorage.getItem("user")
+
+  // don't show bottom tab when the user is on the intro page 
+
+  // don't show the header when the user is not on their home page
 
   return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
+        headerShown: isUserSignedIn
       }}>
       <BottomTab.Screen
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
+          tabBarStyle:{
+            display: isUserSignedIn ? 'flex' : 'none'
+          },
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
