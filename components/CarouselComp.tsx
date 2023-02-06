@@ -3,12 +3,6 @@ import { Dimensions, Text, View, Pressable } from 'react-native';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-
-
-interface ScrollToMethod{
-    scrollTo: Function
-}
-
     
     
 
@@ -19,40 +13,8 @@ function CarouselComp() {
     const width = Dimensions.get('window').width;
     const _carouselItems = [{ color: "rgb(6, 20, 146)", txt: "hello", isOnUI: true }, { color: "rgb(233, 192, 233)", txt: "hi", isOnUI: false }, { color: "rgb(80, 34, 116)", txt: "sup", isOnUI: false }]
     const [carouselItems, setCarouselItems] = useState(_carouselItems)
-    const [isAutoPlay, setIsAutoPlay] = useState(false)
-    // const [willUpdateAutoPlay, setWill]
 
     function handlePressIcon(nextCircleIndex: number) {
-        const isUserOnFirstPic = carouselRef.current?.getCurrentIndex() === 0
-        const isUserOnSecondPic = carouselRef.current?.getCurrentIndex() === 1
-        const isUserOnThirdPic = carouselRef.current?.getCurrentIndex() === 2
-
-        if((nextCircleIndex === 1) && (isUserOnFirstPic)){
-            carouselRef.current?.scrollTo({ count: 1, animated: true })
-        }
-
-        if((nextCircleIndex === 2) && (isUserOnSecondPic)){
-            carouselRef.current?.scrollTo({ count: 1, animated: true })
-        }
-
-        
-        if((nextCircleIndex === 2) && (isUserOnFirstPic)){
-            carouselRef.current?.scrollTo({ count: 2, animated: true })
-        }
-
-        if((nextCircleIndex === 0) && (isUserOnSecondPic)){
-            carouselRef.current?.scrollTo({ count: -1, animated: true })
-        }
-
-        if((nextCircleIndex === 1) && isUserOnThirdPic){
-            carouselRef.current?.scrollTo({ count: -1, animated: true })
-        }
-
-        if((nextCircleIndex === 0) && isUserOnThirdPic){
-            carouselRef.current?.scrollTo({ count: -2, animated: true })
-        }
-
-        
         setCarouselItems(carouselItems => carouselItems.map((carouselItem, _index) => {
             if (nextCircleIndex === _index) {
                 return { ...carouselItem, isOnUI: true }
@@ -60,6 +22,28 @@ function CarouselComp() {
 
             return { ...carouselItem, isOnUI: false }
         }))
+
+        const isUserOnFirstPic = carouselRef.current?.getCurrentIndex() === 0
+        const isUserOnSecondPic = carouselRef.current?.getCurrentIndex() === 1
+        const isUserOnThirdPic = carouselRef.current?.getCurrentIndex() === 2
+
+        if(((nextCircleIndex === 1) && isUserOnFirstPic) || ((nextCircleIndex === 2) && isUserOnSecondPic)){
+            carouselRef.current?.scrollTo({ count: 1, animated: true })
+            return;
+        }
+
+        
+        if((nextCircleIndex === 2) && (isUserOnFirstPic)){
+            carouselRef.current?.scrollTo({ count: 2, animated: true })
+            return;
+        }
+
+        if(((nextCircleIndex === 0) && isUserOnSecondPic) || ((nextCircleIndex === 1) && isUserOnThirdPic)){
+            carouselRef.current?.scrollTo({ count: -1, animated: true })
+            return;
+        }
+
+        carouselRef.current?.scrollTo({ count: -2, animated: true })
     }
 
     return (
@@ -68,7 +52,7 @@ function CarouselComp() {
                 loop
                 autoPlay={false}
                 width={width}
-                style={{ height: "100%" }}
+                style={{ height: "100%", width: "100% !important"}}
                 data={carouselItems}
                 scrollAnimationDuration={1000}
                 // onSnapToItem={(index) => console.log('current index:', index)}

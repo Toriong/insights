@@ -3,7 +3,6 @@ import { Button, Pressable, StyleSheet } from 'react-native';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 import CarouselComp from '../components/CarouselComp';
 import { globalStyles } from '../globalStyles';
-import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 
@@ -15,24 +14,26 @@ function IntroScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
         <CarouselComp />
       </View>
       <View style={buttonSec}>
-        <Pressable style={loginBtn} onPress={() => { console.log("hey there") }}>
-          <Text style={{...whiteTxt, ...btnTxt }}>Login</Text>
-        </Pressable>
         <Pressable style={signUpBtn}>
-          <Text style={{...blackTxt, ...btnTxt }}>Sign-in</Text>
+          <Text style={{ ...blackTxt, ...btnTxt }}>Create Account</Text>
+        </Pressable>
+        <Pressable style={loginBtn} onPress={() => { console.log("hey there") }}>
+          <Text style={{ ...whiteTxt, ...btnTxt }}>Login</Text>
         </Pressable>
       </View>
     </View>
   );
 }
 
-// FFFFFF
 
-const defaultBtnStyles = { 
-  height: "50px", 
-  width: "130px",
-}
+const defaultBtnStyles = StyleSheet.create({
+  styles:{
+    height: "50px",
+    width: "65%",
+  }
+})
 
+const { blackTxt, whiteTxt, btnStyles } = globalStyles;
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
@@ -50,10 +51,10 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
-  headerSec:{
+  headerSec: {
     height: "100%"
   },
-  buttonSec:{
+  buttonSec: {
     height: "225px",
     display: 'flex',
     alignItems: 'center',
@@ -63,27 +64,42 @@ const styles = StyleSheet.create({
     position: "absolute",
     backgroundColor: 'none',
   },
-  signUpBtn:{
-      ...defaultBtnStyles,
-      backgroundColor: "white",
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
+  signUpBtn: {
+    ...defaultBtnStyles.styles,
+    backgroundColor: "white",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderTopEndRadius: 8,
+    borderTopStartRadius: 8,
+    borderBottomEndRadius: 8,
+    borderBottomStartRadius: 8,
+    borderWidth: 0,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.46,
+    shadowRadius: 11.14,
   },
-  loginBtn:{
-      ...defaultBtnStyles,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+  loginBtn: {
+    ...defaultBtnStyles.styles,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+
   },
-  btnTxt:{
+  btnTxt: {
     width: '100%',
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: "500"
   }
 });
 
 
-const { blackTxt, whiteTxt } = globalStyles;
+
 const { container, headerSec, buttonSec, signUpBtn, loginBtn, btnTxt } = styles;
 
 export default IntroScreen

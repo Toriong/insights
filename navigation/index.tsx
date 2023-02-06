@@ -63,9 +63,6 @@ function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   const isUserSignedIn = !!localStorage.getItem("user")
 
-  // don't show bottom tab when the user is on the intro page 
-
-  // don't show the header when the user is not on their home page
 
   return (
     <BottomTab.Navigator

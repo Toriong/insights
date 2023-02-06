@@ -7,5 +7,9 @@ export const globalStyles = StyleSheet.create({
     },
     whiteTxt:{
         color: 'white'
+    },
+    btnStyles:{
+        fontSize: 15,
+        fontWeight: "300"
     }
 }) 
