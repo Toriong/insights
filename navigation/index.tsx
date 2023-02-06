@@ -14,7 +14,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import IntroTab from '../screens/IntroTab';
+import IntroScreen from '../screens/IntroScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -22,7 +22,6 @@ import LinkingConfiguration from './LinkingConfiguration';
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
-      linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <RootNavigator />
     </NavigationContainer>
@@ -34,16 +33,23 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
  * https://reactnavigation.org/docs/modal
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const { Screen, Navigator } = Stack;
 
 function RootNavigator() {
+  const isUserSignedIn = !!localStorage.getItem('user')
+
   return (
-    <Stack.Navigator>
-      {/* <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <Stack.Navigator>
+
+
+
+        {/* <Stack.Screen name="Root" component={IntroScreen} /> */}
+        {/* <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group> */}
-    </Stack.Navigator>
+      <Stack.Screen name="Modal" component={ModalScreen} />
+    </Stack.Group> */}
+        <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      </Stack.Navigator>
   );
 }
 
@@ -70,10 +76,10 @@ function BottomTabNavigator() {
       }}>
       <BottomTab.Screen
         name="TabOne"
-        component={IntroTab}
+        component={IntroScreen}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          tabBarStyle:{
-            display: 'flex'
+          tabBarStyle: {
+            display: isUserSignedIn ? 'flex' : 'none'
           },
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
