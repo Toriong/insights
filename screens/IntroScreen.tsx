@@ -15,7 +15,7 @@ function IntroScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
         <CarouselComp />
       </View>
       <View style={buttonSec}>
-        <Pressable style={loginBtn}>
+        <Pressable style={loginBtn} onPress={() => { console.log("hey there") }}>
           <Text style={{...whiteTxt, ...btnTxt }}>Login</Text>
         </Pressable>
         <Pressable style={signUpBtn}>
@@ -54,14 +54,14 @@ const styles = StyleSheet.create({
     height: "100%"
   },
   buttonSec:{
-    height: "300px",
+    height: "225px",
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     width: "100%",
     bottom: "10px",
     position: "absolute",
-    backgroundColor: 'none'
+    backgroundColor: 'none',
   },
   signUpBtn:{
       ...defaultBtnStyles,
